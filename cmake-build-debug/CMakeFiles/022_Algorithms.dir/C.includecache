@@ -1,0 +1,16 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+E:/000-Study/020-CCPP/022-Algorithms/main.c
+stdio.h
+-
+stack.h
+E:/000-Study/020-CCPP/022-Algorithms/stack.h
+
+E:/000-Study/020-CCPP/022-Algorithms/stack.h
+

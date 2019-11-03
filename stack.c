@@ -4,15 +4,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-typedef struct node{
-    int data;
-    struct node *next;
-}Stack;
+#include "stack.h"
 
-int IsEmpty(Stack* stack);
-int Pop(Stack* stack);
+int IsEmpty(Stack* stack)
+{
+    return (stack->next==0);
+}
 
-Stack* CreateStack() {
+Stack *CreateStack() {
     Stack *stack = (Stack *) malloc(sizeof(Stack));
     if (stack != NULL)
     {
@@ -23,40 +22,29 @@ Stack* CreateStack() {
     return NULL;
 }
 
-void EmptyStack(Stack* stack)
-{
-    while (!IsEmpty(stack))
+
+int GetTop(Stack *stack) {
+    if(!IsEmpty(stack))
     {
-        Pop(stack);
+        return stack->next->data;
     }
-    printf("stack is empty.\n");
+    printf("stack is empty");
+    return -1;
 }
 
-void DestroyStack(Stack* stack)
-{
-    free(stack);
-    printf("stack is destroyed");
-    exit(0);
-}
-
-int IsEmpty(Stack* stack)
-{
-    return (stack->next==0);
-}
-
-int Push(Stack* stack, int data) {
-    Stack *newst = (Stack *) malloc(sizeof(Stack));
-    if (NULL != newst) {
-        newst->data = data;
-        newst->next = stack->next;
-        stack->next = newst;
+int Push(Stack *stack, int data) {
+    Stack *pNode = (Stack *) malloc(sizeof(Stack));
+    if (NULL != pNode) {
+        pNode->data = data;
+        pNode->next = stack->next;
+        stack->next = pNode;
         return 1;
     }
     printf("push failed");
     return 0;
 }
 
-int Pop(Stack* stack) {
+int Pop(Stack *stack) {
     Stack *tempst;
     if (!IsEmpty(stack)) {
         tempst = stack->next;
@@ -67,12 +55,17 @@ int Pop(Stack* stack) {
     return 0;
 }
 
-int GetTop(Stack* stack)
-{
-    if(!IsEmpty(stack))
-    {
-        return stack->next->data;
-    }
-    printf("stack is empty");
-    return -1;
+void DestroyStack(Stack *stack) {
+    free(stack);
+    printf("stack is destroyed");
+    exit(0);
 }
+
+void EmptyStack(Stack *stack) {
+    while (!IsEmpty(stack))
+    {
+        Pop(stack);
+    }
+    printf("stack is empty.\n");
+}
+
