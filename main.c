@@ -1,9 +1,11 @@
 //
 // Created by Bill on 11/3/2019.
 //
+/*
 #include <stdio.h>
 
 #include "stack.h"
+
 
 int main()
 {
@@ -18,4 +20,4 @@ int main()
     Pop(stack);
     printf("%d\n",GetTop(stack));
     return 0;
-}
+}*/
