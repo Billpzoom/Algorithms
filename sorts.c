@@ -2,8 +2,40 @@
 // Created by Bill on 21/11/2019.
 //
 #include <stdio.h>
+#include <stdlib.h>
 #include "sorts.h"
 
+int *aux;
+
+void LocalMerge(int *a, int lo, int mid, int hi) {
+    int i = lo, j = mid + 1;
+    for (int k = lo; k <= hi; ++k) {
+        aux[k] = a[k];
+    }
+    for (int l = lo; l <= hi; ++l) {
+        if (i > mid) a[l] = aux[j++];
+        else if (j > hi) a[l] = aux[i++];
+        else if (Less(aux[j], aux[i])) a[l] = aux[j++];
+        else a[l] = aux[i++];
+    }
+}
+
+void merge(int *a, int len) {
+    aux = (int *) malloc(sizeof(int) * len);
+    Merge(a, 0, len - 1);
+    free(aux);
+}
+
+void Merge(int *a, int lo, int hi) {
+    if (hi <= lo)
+        return;
+
+    int mid = lo + (hi - lo) / 2;
+
+    Merge(a, lo, mid);
+    Merge(a, mid + 1, hi);
+    LocalMerge(a, lo, mid, hi);
+}
 
 void shell(int *a, int len) {
     int h = 1;
