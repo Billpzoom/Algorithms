@@ -6,6 +6,40 @@
 #include "sorts.h"
 #include <math.h>
 
+
+void quick3way(int *a, int lo, int hi) {
+    if (hi <= lo) return;
+    int lt = lo, i = lo + 1, gt = hi;
+    int v = a[lo];
+    while (i <= gt) {
+        if (a[i] < v) Exchange(a, lt++, i++);
+        else if (a[i] > v) Exchange(a, i, gt--);
+        else i++;
+    }
+    quick3way(a, lo, lt - 1);
+    quick3way(a, gt + 1, hi);
+}
+
+void quick(int *a, int lo, int hi){
+    if(hi <= lo) return;
+    int j = Partition(a, lo, hi);
+    quick(a,lo,j-1);
+    quick(a,j+1,hi);
+}
+
+int Partition(int *a, int lo, int hi) {
+    int i = lo, j = hi + 1;
+    int v = a[lo];
+    while (1) {
+        while (Less(a[++i], v)) if (i == hi) break;
+        while (Less(v, a[--j])) if (j == lo) break;
+        if (i >= j) break;
+        Exchange(a, i, j);
+    }
+    Exchange(a, lo, j);
+    return j;
+}
+
 int *aux;
 
 void LocalMerge(int *a, int lo, int mid, int hi) {
