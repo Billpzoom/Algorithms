@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "sorts.h"
+#include <math.h>
 
 int *aux;
 
@@ -20,6 +21,18 @@ void LocalMerge(int *a, int lo, int mid, int hi) {
     }
 }
 
+void mergebu(int *a, int len) {
+    aux = (int *) malloc(sizeof(int) * len);
+    for (int sz = 1; sz < len; sz = sz + sz) {
+        for (int lo = 0; lo < len - sz; lo += sz + sz) {
+            int h;
+            if ((lo + sz + sz + 1) < (len - 1)) h = lo + sz + sz + 1;
+            else h = len - 1;
+            LocalMerge(a, lo, lo + sz - 1, h);
+        }
+    }
+    free(aux);
+}
 void merge(int *a, int len) {
     aux = (int *) malloc(sizeof(int) * len);
     Merge(a, 0, len - 1);
