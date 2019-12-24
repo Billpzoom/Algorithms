@@ -5,8 +5,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-Node *balance(Node *node);
-
 _Bool isRed(Node *node) {
     if (node == NULL) return false;
     return node->color == RED;
