@@ -64,20 +64,13 @@ Node *balance(Node *node) {
     return node;
 }
 
-Node* moveRedLeft(Node *node){
+Node* moveRedLeft(Node *node) {
     flipColors(node);
-    if(isRed(node->left->right)){
-        node->right=rotateRight(node->right);
-        node=rotateLeft(node);
+    if (isRed(node->left->right)) {
+        node->right = rotateRight(node->right);
+        node = rotateLeft(node);
     }
     return node;
-}
-Node* deleteMin(Node *node) {
-    if (node->left == NULL)return NULL;
-    if (!isRed(node->left) && !isRed(node->left->left))
-        node = moveRedLeft(node);
-    node->left = deleteMin(node->left);
-    return balance(node);
 }
 
 Node* moveRedRight(Node *node){
@@ -85,6 +78,14 @@ Node* moveRedRight(Node *node){
     if(!isRed(node->left->left))
         node=rotateRight(node);
     return node;
+}
+
+Node* deleteMin(Node *node) {
+    if (node->left == NULL)return NULL;
+    if (!isRed(node->left) && !isRed(node->left->left))
+        node = moveRedLeft(node);
+    node->left = deleteMin(node->left);
+    return balance(node);
 }
 
 Node* deleteMax(Node *node) {
